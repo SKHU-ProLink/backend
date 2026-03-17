@@ -1,1 +1,37 @@
-spring.application.name=backend
+server:
+  port: 8080
+
+spring:
+  application:
+    name: SKHU-ProLink
+
+  profiles:
+    active: local
+
+  config:
+    import: optional:file:.env[.properties]
+
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI}
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+swagger:
+  servers:
+    - ${SWAGGER_SERVER_PROD}
+    - ${SWAGGER_SERVER_LOCAL}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    url: /v3/api-docs
+    display-request-duration: true
+    groups-order: ASC
+    tags-sorter: alpha
+    operations-sorter: method
