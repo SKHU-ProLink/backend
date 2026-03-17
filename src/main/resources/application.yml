@@ -11,4 +11,5 @@ spring:
       max-request-size: 5MB
 
 swagger:
-  server-url: ${APP_SERVER_URL}
+  servers:
+    - ${APP_SERVER_URL}
