@@ -1,0 +1,24 @@
+# 빌드 결과
+build/
+out/
+
+# gradle 캐시
+.gradle/
+
+# git
+.git
+.gitignore
+
+# IDE
+.idea
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# 환경파일
+.env
