@@ -13,7 +13,7 @@ public interface RefreshTokenRepository extends MongoRepository<RefreshToken, St
 
     Optional<RefreshToken> findByUserIdAndDeviceInfo(String userId, String deviceInfo) ;
 
-    void deleteByUserId(String userId);
+    void deleteByUserId(String userId);         // 추후 회원탈퇴 시 사용할 예정
 
     void deleteByToken(String token);
 }
