@@ -41,8 +41,6 @@ public class KakaoClient {
         params.add("redirect_uri", redirectUri);
         params.add("code", code);
 
-        log.info(code);
-
         Map<String, Object> response = webClient.post()
                 .uri(TOKEN_URL)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
