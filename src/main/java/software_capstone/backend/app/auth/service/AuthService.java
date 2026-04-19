@@ -1,13 +1,14 @@
 package software_capstone.backend.app.auth.service;
 
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.auth.document.OAuthProvider;
-import software_capstone.backend.app.auth.document.Role;
 import software_capstone.backend.app.auth.document.RefreshToken;
+import software_capstone.backend.app.auth.document.Role;
 import software_capstone.backend.app.auth.document.User;
 import software_capstone.backend.app.auth.dto.LoginRequest;
 import software_capstone.backend.app.auth.dto.TokenResponse;
@@ -16,8 +17,6 @@ import software_capstone.backend.app.auth.repository.RefreshTokenRepository;
 import software_capstone.backend.app.auth.repository.UserRepository;
 import software_capstone.backend.global.exception.ErrorMessage;
 import software_capstone.backend.global.exception.UnauthorizedException;
-
-import io.jsonwebtoken.Claims;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
