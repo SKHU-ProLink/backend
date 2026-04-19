@@ -60,7 +60,6 @@ public class AuthController {
     @GetMapping("/naver/callback")
     public ResponseEntity<TokenResponse> naverCallback(
             @RequestParam String code,
-            @RequestParam String state,
             @RequestParam(defaultValue = "web") String deviceInfo) {
         return ResponseEntity.ok(authService.naverLogin(new LoginRequest(code, deviceInfo)));
     }
