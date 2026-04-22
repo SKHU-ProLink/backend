@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import software_capstone.backend.app.abocado.document.Difficulty;
 import software_capstone.backend.global.document.BaseEntity;
 
 @Getter
@@ -19,4 +20,6 @@ public class User extends BaseEntity {
     private String name;
     private Role role;
     private boolean isProActive;
+
+    private Difficulty difficulty;
 }
