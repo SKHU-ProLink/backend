@@ -23,4 +23,8 @@ public class User extends BaseEntity {
     private boolean isProActive;
 
     private Difficulty difficulty;
+
+    public void updateDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
 }
