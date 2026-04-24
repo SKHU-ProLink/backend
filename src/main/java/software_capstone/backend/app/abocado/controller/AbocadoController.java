@@ -3,10 +3,12 @@ package software_capstone.backend.app.abocado.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software_capstone.backend.app.abocado.dto.AbocadoOnboardingRequest;
@@ -42,7 +44,7 @@ public class AbocadoController {
     @PostMapping("/onboarding")
     public ResponseEntity<Void> onBoarding(
             @AuthenticationPrincipal String userId,
-            AbocadoOnboardingRequest request
+            @RequestBody @Valid AbocadoOnboardingRequest request
     ) {
         abocadoService.onBoarding(userId, request);
         return ResponseEntity.ok().build();
