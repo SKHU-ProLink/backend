@@ -4,6 +4,7 @@ spring:
 
   mongodb:
     uri: ${MONGODB_URI}
+    auto-index-creation: true
 
   servlet:
     multipart:
@@ -13,3 +14,18 @@ spring:
 swagger:
   servers:
     - ${APP_SERVER_URL}
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-expiration: 1800000       # 30분
+  refresh-token-expiration: 1209600000   # 14
+
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
+
+  naver:
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
+    redirect-uri: ${NAVER_REDIRECT_URI}
