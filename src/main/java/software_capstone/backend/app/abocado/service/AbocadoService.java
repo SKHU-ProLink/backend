@@ -2,6 +2,7 @@ package software_capstone.backend.app.abocado.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.abocado.document.Abocado;
 import software_capstone.backend.app.abocado.dto.AbocadoOnboardingRequest;
 import software_capstone.backend.app.abocado.repository.AbocadoRepository;
@@ -17,6 +18,8 @@ public class AbocadoService {
     private final AbocadoRepository abocadoRepository;
     private final UserRepository userRepository;
 
+    // 메서드가 2개 이상의 컬렉션을 다루고 있기에, @Transaction 필요
+    @Transactional
     public void onBoarding(
             String userId,
             AbocadoOnboardingRequest request
