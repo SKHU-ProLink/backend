@@ -1,9 +1,9 @@
-package software_capstone.backend.app.auth.repository;
+package software_capstone.backend.app.user.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import software_capstone.backend.app.auth.document.OAuthProvider;
-import software_capstone.backend.app.auth.document.User;
+import software_capstone.backend.app.user.document.User;
 
 import java.util.Optional;
 
