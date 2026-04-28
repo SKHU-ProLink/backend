@@ -9,6 +9,10 @@ import software_capstone.backend.app.abocado.repository.AbocadoRepository;
 import software_capstone.backend.app.user.document.User;
 import software_capstone.backend.app.user.repository.UserRepository;
 import software_capstone.backend.app.user.service.UserService;
+import software_capstone.backend.global.exception.ErrorMessage;
+import software_capstone.backend.global.exception.NotFoundException;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +37,14 @@ public class AbocadoService {
         User user = userService.findUserById(userId);
         user.completeOnboarding(request.difficulty());
         userRepository.save(user); // MongoDB는 JPA와 달리 영속성 컨텍스트가 없기에, 저장을 반영하려면 save 메서드 필요
+    }
+
+    public Abocado findAbocadoByUserId(String userId) {
+        return abocadoRepository.findCurrentAbocado(userId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.CURRENT_ACTIVE_ABOCADO_NOT_FOUND));
+    }
+
+    public List<Abocado> getCompletedAbocados(String userId) {
+        return abocadoRepository.findCompletedAbocados(userId);
     }
 }
