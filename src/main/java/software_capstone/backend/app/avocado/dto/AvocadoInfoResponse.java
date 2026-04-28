@@ -1,9 +1,9 @@
-package software_capstone.backend.app.abocado.dto;
+package software_capstone.backend.app.avocado.dto;
 
 import lombok.Builder;
 
 @Builder
-public record AbocadoInfoResponse(
+public record AvocadoInfoResponse(
         String id,
         String name,
         int level,

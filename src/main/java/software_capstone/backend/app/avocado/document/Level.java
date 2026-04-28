@@ -1,4 +1,4 @@
-package software_capstone.backend.app.abocado.document;
+package software_capstone.backend.app.avocado.document;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

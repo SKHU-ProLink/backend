@@ -13,8 +13,8 @@ public enum ErrorMessage {
     EXPIRED_TOKEN("만료된 토큰입니다."),
     REFRESH_TOKEN_NOT_ALLOWED("리프레시 토큰으로는 접근할 수 없습니다."),
 
-    // Abocado
-    CURRENT_ACTIVE_ABOCADO_NOT_FOUND("현재 활성화중인 아보카도를 찾을 수 없습니다.");
+    // Avocado
+    CURRENT_ACTIVE_AVOCADO_NOT_FOUND("현재 활성화중인 아보카도를 찾을 수 없습니다.");
 
     private final String message;
 

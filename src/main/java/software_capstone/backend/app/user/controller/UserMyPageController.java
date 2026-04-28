@@ -1,4 +1,4 @@
-package software_capstone.backend.app.user;
+package software_capstone.backend.app.user.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
