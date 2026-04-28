@@ -31,7 +31,7 @@ public class AbocadoService {
                         .build());
 
         User user = userService.findUserById(userId);
-        user.updateDifficulty(request.difficulty());
+        user.completeOnboarding(request.difficulty());
         userRepository.save(user); // MongoDB는 JPA와 달리 영속성 컨텍스트가 없기에, 저장을 반영하려면 save 메서드 필요
     }
 }

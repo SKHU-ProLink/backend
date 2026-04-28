@@ -9,6 +9,8 @@ import software_capstone.backend.app.abocado.document.Difficulty;
 import software_capstone.backend.app.auth.document.OAuthProvider;
 import software_capstone.backend.global.document.BaseEntity;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -23,8 +25,10 @@ public class User extends BaseEntity {
     private boolean isProActive;
 
     private Difficulty difficulty;
+    private LocalDateTime onBoardedAt;
 
-    public void updateDifficulty(Difficulty difficulty) {
+    public void completeOnboarding(Difficulty difficulty) {
         this.difficulty = difficulty;
+        this.onBoardedAt = LocalDateTime.now();
     }
 }
