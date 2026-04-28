@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum ErrorMessage {
     // User
     USER_NOT_FOUND("사용자를 찾을 수 없습니다."),
+    USER_ALREADY_ONBOARDED("이미 온보딩이 완료된 유저입니다."),
 
     // JWT
     INVALID_TOKEN("유효하지 않은 토큰입니다."),
