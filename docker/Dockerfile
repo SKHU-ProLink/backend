@@ -7,5 +7,5 @@ RUN gradle clean build -x test --no-daemon
 # 2. 실행 단계
 FROM eclipse-temurin:17-jdk
 WORKDIR /app
-COPY --from=builder /build/build/libs/*.jar app.jar
+COPY --from=builder /build/build/libs/*SNAPSHOT*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
