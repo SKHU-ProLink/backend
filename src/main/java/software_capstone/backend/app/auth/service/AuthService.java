@@ -98,7 +98,6 @@ public class AuthService {
                 .oauthId(oauthId)
                 .name(name)
                 .role(Role.USER)
-                .isProActive(false)
                 .build()));
 
         if (isNewUser) {
