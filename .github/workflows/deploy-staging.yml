@@ -34,7 +34,7 @@ jobs:
 
       - name: Deploy to Staging
         run: |
-          docker rm -f skhu-capstone nginx mongo certbot || true
+          docker rm -f $(docker ps -aq) || true
           cd ~/deploy/prolink
           ~/.local/bin/docker-compose pull
           ~/.local/bin/docker-compose up -d --remove-orphans
