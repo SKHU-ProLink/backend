@@ -12,7 +12,7 @@ public class ShopItemResponse {
     private String id;
     private String name;
     private int price;
-    private int rewardExp;
+    private int growthRate;
     private ItemCategory category;
     private String imageUrl;
 
@@ -21,7 +21,7 @@ public class ShopItemResponse {
                 .id(shopItem.getId())
                 .name(shopItem.getName())
                 .price(shopItem.getPrice())
-                .rewardExp(shopItem.getRewardExp())
+                .growthRate(shopItem.getGrowthRate())
                 .category(shopItem.getCategory())
                 .imageUrl(shopItem.getImageUrl())
                 .build();

@@ -14,7 +14,7 @@ public class ShopItem extends BaseEntity {
 
     private String name;
     private int price;
-    private int rewardExp;
+    private int growthRate;
     private ItemCategory category;
     private String imageUrl;
     private boolean isReleased;
