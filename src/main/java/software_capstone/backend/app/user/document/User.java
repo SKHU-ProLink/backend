@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
-import software_capstone.backend.app.avocado.document.Difficulty;
 import software_capstone.backend.app.auth.document.OAuthProvider;
 import software_capstone.backend.global.document.BaseEntity;
 import software_capstone.backend.global.exception.BadRequestException;
