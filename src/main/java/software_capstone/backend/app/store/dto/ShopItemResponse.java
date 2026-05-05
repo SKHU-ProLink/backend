@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.store.document.category.ItemCategory;
+import software_capstone.backend.app.store.document.category.ItemGrade;
 
 @Getter
 @Builder
@@ -13,7 +14,9 @@ public class ShopItemResponse {
     private String name;
     private int price;
     private int growthRate;
+    private int xpOnFeed;
     private ItemCategory category;
+    private ItemGrade grade;
     private String imageUrl;
 
     public static ShopItemResponse from(ShopItem shopItem) {
@@ -22,7 +25,9 @@ public class ShopItemResponse {
                 .name(shopItem.getName())
                 .price(shopItem.getPrice())
                 .growthRate(shopItem.getGrowthRate())
+                .xpOnFeed(shopItem.getXpOnFeed())
                 .category(shopItem.getCategory())
+                .grade(shopItem.getGrade())
                 .imageUrl(shopItem.getImageUrl())
                 .build();
     }
