@@ -28,7 +28,8 @@ public interface ShopControllerDocs {
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "상점 아이템 목록 조회 성공"),
-            @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음")
+            @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
+            @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
     })
     ResponseEntity<List<ShopItemResponse>> getItems(String userId, ItemCategory category);
 }
