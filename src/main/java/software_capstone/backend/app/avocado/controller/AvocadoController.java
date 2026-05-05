@@ -16,7 +16,7 @@ import software_capstone.backend.app.avocado.service.AvocadoService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/abocado")
+@RequestMapping("/avocado")
 public class AvocadoController {
 
     private final AvocadoService avocadoService;
