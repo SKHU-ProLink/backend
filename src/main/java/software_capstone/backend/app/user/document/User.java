@@ -24,8 +24,6 @@ public class User extends BaseEntity {
     private String oauthId;
     private String name;
     private Role role;
-    private boolean isProActive;
-
     private Difficulty difficulty;
     private LocalDateTime onBoardedAt;
 
