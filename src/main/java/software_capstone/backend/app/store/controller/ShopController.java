@@ -29,6 +29,6 @@ public class ShopController implements ShopControllerDocs {
             @AuthenticationPrincipal String userId,
             @RequestParam(required = false) ItemCategory category
     ) {
-        return ResponseEntity.ok(shopService.getItems(category));
+        return ResponseEntity.ok(shopService.getItems(userId, category));
     }
 }
