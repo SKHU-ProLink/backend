@@ -7,6 +7,7 @@ import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.store.dto.ShopItemResponse;
 import software_capstone.backend.app.store.repository.ShopItemRepository;
 import software_capstone.backend.app.user.repository.UserRepository;
+import software_capstone.backend.app.user.service.UserService;
 import software_capstone.backend.global.exception.ErrorMessage;
 import software_capstone.backend.global.exception.NotFoundException;
 
@@ -16,11 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShopService {
     private final ShopItemRepository shopItemRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     public List<ShopItemResponse> getItems(String userId, ItemCategory category) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+        userService.findUserById(userId);
 
         List<ShopItem> items = (category == null)
                 ? shopItemRepository.findByIsReleasedTrue()
