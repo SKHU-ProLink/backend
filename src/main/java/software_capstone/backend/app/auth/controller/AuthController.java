@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import software_capstone.backend.app.auth.dto.LoginRequest;
 import software_capstone.backend.app.auth.dto.RefreshRequest;
 import software_capstone.backend.app.auth.dto.TokenResponse;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.auth.service.AuthService;
 
 @Tag(name = "Auth", description = "소셜 로그인 및 토큰 관리 API")
@@ -45,6 +48,13 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody RefreshRequest request) {
         authService.logout(request.refreshToken());
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "회원탈퇴", description = "리프레시 토큰과 유저를 삭제하여 회원 탈퇴합니다.")
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@AuthenticationPrincipal TokenProvider.AuthUser authUser) {
+        authService.deleteUser(authUser.userId());
         return ResponseEntity.ok().build();
     }
 

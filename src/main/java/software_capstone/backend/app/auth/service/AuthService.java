@@ -16,6 +16,7 @@ import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.auth.repository.RefreshTokenRepository;
 import software_capstone.backend.app.user.repository.UserRepository;
 import software_capstone.backend.global.exception.ErrorMessage;
+import software_capstone.backend.global.exception.NotFoundException;
 import software_capstone.backend.global.exception.UnauthorizedException;
 
 import java.time.LocalDateTime;
@@ -79,7 +80,7 @@ public class AuthService {
         saveRefreshToken(user.getId(), newRefreshToken, stored.getDeviceInfo());
 
         log.info("[Auth] 토큰 재발급 완료 - userId: {}", user.getId());
-        return new TokenResponse(newAccessToken, newRefreshToken, false);
+        return new TokenResponse(user.getId(), newAccessToken, newRefreshToken, false);
     }
 
     @Transactional
@@ -97,7 +98,6 @@ public class AuthService {
                 .oauthId(oauthId)
                 .name(name)
                 .role(Role.USER)
-                .isProActive(false)
                 .build()));
 
         if (isNewUser) {
@@ -111,7 +111,7 @@ public class AuthService {
         saveRefreshToken(user.getId(), refreshToken, deviceInfo);
 
         log.info("[Auth] 토큰 발급 완료 - userId: {}", user.getId());
-        return new TokenResponse(accessToken, refreshToken, isNewUser);
+        return new TokenResponse(user.getId(), accessToken, refreshToken, isNewUser);
     }
 
     private void saveRefreshToken(String userId, String token, String deviceInfo) {
@@ -124,5 +124,15 @@ public class AuthService {
                 .deviceInfo(deviceInfo)
                 .expiresAt(LocalDateTime.now().plus(refreshTokenExpiration, ChronoUnit.MILLIS))
                 .build());
+    }
+
+    @Transactional
+    public void deleteUser(String userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
+
+        log.info("[Auth] 회원탈퇴 처리");
+        refreshTokenRepository.deleteByUserId(userId);
+        userRepository.deleteById(userId);
     }
 }
