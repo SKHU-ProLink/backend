@@ -17,7 +17,6 @@ public class ShopItemResponse {
     private int xpOnFeed;
     private ItemCategory category;
     private ItemGrade grade;
-    private String imageUrl;
 
     public static ShopItemResponse from(ShopItem shopItem) {
         return ShopItemResponse.builder()
@@ -28,7 +27,6 @@ public class ShopItemResponse {
                 .xpOnFeed(shopItem.getXpOnFeed())
                 .category(shopItem.getCategory())
                 .grade(shopItem.getGrade())
-                .imageUrl(shopItem.getImageUrl())
                 .build();
     }
 }

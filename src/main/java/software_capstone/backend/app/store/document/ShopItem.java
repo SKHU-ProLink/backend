@@ -19,6 +19,5 @@ public class ShopItem extends BaseEntity {
     private int xpOnFeed;
     private ItemCategory category;
     private ItemGrade grade;
-    private String imageUrl;
     private boolean isReleased;
 }
