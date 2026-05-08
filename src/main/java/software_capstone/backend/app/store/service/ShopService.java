@@ -2,14 +2,12 @@ package software_capstone.backend.app.store.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.store.dto.ShopItemResponse;
 import software_capstone.backend.app.store.repository.ShopItemRepository;
-import software_capstone.backend.app.user.repository.UserRepository;
 import software_capstone.backend.app.user.service.UserService;
-import software_capstone.backend.global.exception.ErrorMessage;
-import software_capstone.backend.global.exception.NotFoundException;
 
 import java.util.List;
 
@@ -19,6 +17,7 @@ public class ShopService {
     private final ShopItemRepository shopItemRepository;
     private final UserService userService;
 
+    @Transactional(readOnly = true)
     public List<ShopItemResponse> getItems(String userId, ItemCategory category) {
         userService.findUserById(userId);
 
