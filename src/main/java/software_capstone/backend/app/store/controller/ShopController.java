@@ -1,8 +1,5 @@
 package software_capstone.backend.app.store.controller;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +14,7 @@ import software_capstone.backend.app.store.service.ShopService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/shop")
+@RequestMapping("/shop")
 @RequiredArgsConstructor
 public class ShopController implements ShopControllerDocs {
 
