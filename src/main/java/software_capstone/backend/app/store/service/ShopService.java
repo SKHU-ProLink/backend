@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.document.ShopItem;
-import software_capstone.backend.app.store.dto.ShopItemResponse;
+import software_capstone.backend.app.store.dto.response.ShopItemResponse;
 import software_capstone.backend.app.store.repository.ShopItemRepository;
 import software_capstone.backend.app.user.service.UserService;
 
