@@ -8,6 +8,7 @@ import software_capstone.backend.app.store.document.UserInventory;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
+import software_capstone.backend.app.store.dto.response.InventoryResponse;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
 import software_capstone.backend.app.store.repository.PurchaseHistoryRepository;
@@ -19,6 +20,8 @@ import software_capstone.backend.global.exception.ErrorMessage;
 import software_capstone.backend.global.exception.NotFoundException;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +70,24 @@ public class ShopService {
                 .build());
 
         return PurchaseResponse.of(item, user.getCash());
+    }
+
+    @Transactional(readOnly = true)
+    public List<InventoryResponse> getInventory(String userId) {
+        userService.findUserById(userId);
+
+        List<UserInventory> inventories = userInventoryRepository.findByUserId(userId);
+
+        List<String> itemIds = inventories.stream()
+                .map(UserInventory::getItemId)
+                .toList();
+
+        Map<String, ShopItem> itemMap = shopItemRepository.findByIdIn(itemIds).stream()
+                .collect(Collectors.toMap(ShopItem::getId, item -> item));
+
+        return inventories.stream()
+                .filter(inventory -> itemMap.containsKey(inventory.getItemId()))
+                .map(inventory -> InventoryResponse.of(inventory, itemMap.get(inventory.getItemId())))
+                .toList();
     }
 }
