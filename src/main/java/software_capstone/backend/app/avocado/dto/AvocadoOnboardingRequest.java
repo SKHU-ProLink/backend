@@ -1,10 +1,10 @@
-package software_capstone.backend.app.abocado.dto;
+package software_capstone.backend.app.avocado.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import software_capstone.backend.app.abocado.document.Difficulty;
+import software_capstone.backend.app.user.document.Difficulty;
 
-public record AbocadoOnboardingRequest(
+public record AvocadoOnboardingRequest(
         @NotBlank String name,
         @NotNull Difficulty difficulty
 ) {

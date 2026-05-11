@@ -1,4 +1,4 @@
-package software_capstone.backend.app.abocado.document;
+package software_capstone.backend.app.avocado.document;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,8 @@ import software_capstone.backend.global.document.BaseEntity;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Document(collection = "abocados")
-public class Abocado extends BaseEntity {
+@Document(collection = "avocados")
+public class Avocado extends BaseEntity {
 
     @Indexed
     private String userId;

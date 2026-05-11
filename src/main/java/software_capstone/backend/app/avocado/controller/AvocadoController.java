@@ -1,4 +1,4 @@
-package software_capstone.backend.app.abocado.controller;
+package software_capstone.backend.app.avocado.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import software_capstone.backend.app.abocado.dto.AbocadoOnboardingRequest;
-import software_capstone.backend.app.abocado.service.AbocadoService;
+import software_capstone.backend.app.avocado.dto.AvocadoOnboardingRequest;
+import software_capstone.backend.app.avocado.service.AvocadoService;
 import software_capstone.backend.app.auth.jwt.TokenProvider;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/abocado")
-public class AbocadoController {
+@RequestMapping("/avocado")
+public class AvocadoController {
 
-    private final AbocadoService abocadoService;
+    private final AvocadoService avocadoService;
 
     @Operation(
             summary = "유저 온보딩",
@@ -45,9 +45,9 @@ public class AbocadoController {
     @PostMapping("/onboarding")
     public ResponseEntity<Void> onBoarding(
             @AuthenticationPrincipal TokenProvider.AuthUser authUser,
-            @RequestBody @Valid AbocadoOnboardingRequest request
+            @RequestBody @Valid AvocadoOnboardingRequest request
     ) {
-        abocadoService.onBoarding(authUser.userId(), request);
+        avocadoService.onBoarding(authUser.userId(), request);
         return ResponseEntity.ok().build();
     }
 }
