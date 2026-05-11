@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
+import software_capstone.backend.app.store.dto.response.InventoryResponse;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
 import software_capstone.backend.app.store.service.ShopService;
@@ -35,5 +36,13 @@ public class ShopController implements ShopControllerDocs {
             @RequestBody PurchaseRequest request
     ) {
         return ResponseEntity.ok(shopService.purchaseItem(userId, request));
+    }
+
+    @Override
+    @GetMapping("/inventory")
+    public ResponseEntity<List<InventoryResponse>> getInventory(
+            @AuthenticationPrincipal String userId
+    ) {
+        return ResponseEntity.ok(shopService.getInventory(userId));
     }
 }
