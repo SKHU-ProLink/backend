@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
+import software_capstone.backend.app.store.dto.response.InventoryResponse;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
 
@@ -57,4 +58,22 @@ public interface ShopControllerDocs {
             @ApiResponse(responseCode = "404", description = "유저 또는 아이템을 찾을 수 없음")
     })
     ResponseEntity<PurchaseResponse> purchaseItem(String userId, PurchaseRequest request);
+
+    @Operation(
+            summary = "보관함 조회",
+            description =
+                    """
+                    유저의 보관함 아이템 목록을 조회합니다.
+                    
+                    보유 수량이 0인 아이템은 포함되지 않습니다.
+                    
+                    토큰으로 받아온 유저가 존재하지 않다면 에러가 발생합니다.
+                    """
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "보관함 조회 성공"),
+            @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
+            @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
+    })
+    ResponseEntity<List<InventoryResponse>> getInventory(String userId);
 }
