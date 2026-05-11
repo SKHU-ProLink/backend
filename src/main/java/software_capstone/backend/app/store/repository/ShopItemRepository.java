@@ -15,4 +15,6 @@ public interface ShopItemRepository extends MongoRepository<ShopItem, String> {
     List<ShopItem> findByCategoryAndIsReleasedTrue(ItemCategory category);
     // 단건 출시 아이템 조회 (구새 시 사용)
     Optional<ShopItem> findByIdAndIsReleasedTrue(String id);
+    // id 리스트 조회
+    List<ShopItem> findByIdIn(List<String> ids);
 }
