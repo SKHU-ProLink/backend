@@ -17,6 +17,7 @@ public enum ErrorMessage {
     CURRENT_ACTIVE_AVOCADO_NOT_FOUND("현재 활성화중인 아보카도를 찾을 수 없습니다."),
 
     // store
+    ITEM_NOT_FOUND("아이템을 찾을 수 없습니다."),
     INSUFFICIENT_CASH("캐시가 부족합니다.");
     private final String message;
 
