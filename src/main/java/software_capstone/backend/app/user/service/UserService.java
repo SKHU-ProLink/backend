@@ -18,4 +18,8 @@ public class UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
     }
+
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 }
