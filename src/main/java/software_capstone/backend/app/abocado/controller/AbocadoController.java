@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import software_capstone.backend.app.abocado.dto.AbocadoOnboardingRequest;
 import software_capstone.backend.app.abocado.service.AbocadoService;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,10 +44,10 @@ public class AbocadoController {
     })
     @PostMapping("/onboarding")
     public ResponseEntity<Void> onBoarding(
-            @AuthenticationPrincipal String userId,
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser,
             @RequestBody @Valid AbocadoOnboardingRequest request
     ) {
-        abocadoService.onBoarding(userId, request);
+        abocadoService.onBoarding(authUser.userId(), request);
         return ResponseEntity.ok().build();
     }
 }
