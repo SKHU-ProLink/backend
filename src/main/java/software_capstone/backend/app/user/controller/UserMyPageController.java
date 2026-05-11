@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.user.dto.UserMyPageResponse;
 import software_capstone.backend.app.user.service.UserMyPageService;
 
@@ -41,8 +42,8 @@ public class UserMyPageController {
     })
     @GetMapping
     public ResponseEntity<UserMyPageResponse> getMyPage(
-            @AuthenticationPrincipal String userId
-    ) {
-        return ResponseEntity.ok(userMyPageService.getUserMyPage(userId));
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser
+            ) {
+        return ResponseEntity.ok(userMyPageService.getUserMyPage(authUser.userId()));
     }
 }
