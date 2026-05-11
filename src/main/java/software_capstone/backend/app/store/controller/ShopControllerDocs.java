@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import software_capstone.backend.app.store.document.category.ItemCategory;
-import software_capstone.backend.app.store.dto.ShopItemResponse;
+import software_capstone.backend.app.store.dto.response.ShopItemResponse;
 
 import java.util.List;
 
