@@ -27,8 +27,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ShopService {
     private final ShopItemRepository shopItemRepository;
-    private final UserInventoryRepository userInventoryRepository;
-    private final PurchaseHistoryRepository purchaseHistoryRepository;
+    private final InventoryService inventoryService;
+    private final PurchaseHistoryService purchaseHistoryService;
     private final UserService userService;
 
     @Transactional(readOnly = true)
@@ -54,20 +54,8 @@ public class ShopService {
         user.deductCash(item.getPrice());
         userService.save(user);
 
-        UserInventory inventory = userInventoryRepository
-                .findByUserIdAndItemId(userId, item.getId())
-                .orElseGet(() -> UserInventory.builder()
-                        .userId(userId)
-                        .itemId(item.getId())
-                        .build());
-        inventory.increaseQuantity();
-        userInventoryRepository.save(inventory);
-
-        purchaseHistoryRepository.save(PurchaseHistory.builder()
-                .userId(userId)
-                .itemId(item.getId())
-                .price(item.getPrice())
-                .build());
+        inventoryService.addItem(userId, item.getId());
+        purchaseHistoryService.save(userId, item);
 
         return PurchaseResponse.of(item, user.getCash());
     }
