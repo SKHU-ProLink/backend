@@ -12,13 +12,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties(SwaggerProperties.class)
 public class SwaggerConfig {
 
     private static final String BEARER_KEY = "bearerAuth";
 
     @Bean
-    public OpenAPI openAPI(SwaggerProperties swaggerProperties) {
+    public OpenAPI openAPI() {
         OpenAPI openAPI = new OpenAPI()
                 .components(new Components()
                         .addSecuritySchemes(BEARER_KEY,
@@ -31,10 +30,6 @@ public class SwaggerConfig {
                 )
                 .addSecurityItem(new SecurityRequirement().addList(BEARER_KEY))
                 .info(apiInfo());
-
-        swaggerProperties.servers().forEach(url ->
-                openAPI.addServersItem(new Server().url(url))
-        );
 
         return openAPI;
     }
