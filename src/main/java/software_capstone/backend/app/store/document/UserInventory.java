@@ -5,23 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import software_capstone.backend.app.store.document.category.ItemCategory;
-import software_capstone.backend.app.store.document.category.ItemGrade;
 import software_capstone.backend.global.document.BaseEntity;
 
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Document(collection = "shop_items")
-public class ShopItem extends BaseEntity {
+@Document(collection = "user_inventories")
+public class UserInventory extends BaseEntity {
+    @Indexed
+    private String userId;
+    private String itemId;
+    @Builder.Default
+    private int quantity = 0;
 
-    private String name;
-    private int price;
-    private int growthRate;
-    private int xpOnFeed;
-    private ItemCategory category;
-    private ItemGrade grade;
-    private boolean isReleased;
+    public void increaseQuantity() {
+        this.quantity++;
+    }
 }
