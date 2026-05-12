@@ -19,7 +19,7 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.USER_NOT_FOUND));
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
+    public void save(User user) {
+        userRepository.save(user);
     }
 }
