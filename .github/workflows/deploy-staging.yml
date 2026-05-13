@@ -35,5 +35,5 @@ jobs:
       - name: Deploy to Staging
         run: |
           cd ~/Docker
-          ~/.local/bin/docker-compose pull springboot-develop
-          ~/.local/bin/docker-compose up -d --no-deps springboot-develop
+          docker compose -f docker-compose.yml pull springboot-develop
+          docker compose -f docker-compose.yml up -d --no-deps springboot-develop
