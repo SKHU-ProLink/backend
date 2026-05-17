@@ -6,21 +6,18 @@ import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.inventory.document.UserInventory;
 import software_capstone.backend.app.inventory.dto.InventoryResponse;
-import software_capstone.backend.app.inventory.repository.ShopItemRepository;
 import software_capstone.backend.app.store.repository.UserInventoryRepository;
 import software_capstone.backend.app.user.service.UserService;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class InventoryService {
     private final UserInventoryRepository userInventoryRepository;
-    private final ShopItemRepository shopItemRepository;
     private final UserService userService;
 
+    @Transactional
     public void addItem(String userId, ShopItem item) {
         UserInventory inventory = userInventoryRepository
                 .findByUserIdAndItemId(userId, item.getId())
