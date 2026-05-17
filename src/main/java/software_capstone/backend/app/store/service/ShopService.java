@@ -48,7 +48,7 @@ public class ShopService {
         user.deductCash(item.getPrice());
         userService.save(user);
 
-        inventoryService.addItem(userId, item.getId());
+        inventoryService.addItem(userId, item);
         purchaseHistoryService.save(userId, item);
 
         return PurchaseResponse.of(item, user.getCash());

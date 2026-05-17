@@ -21,12 +21,16 @@ public class InventoryService {
     private final ShopItemRepository shopItemRepository;
     private final UserService userService;
 
-    public void addItem(String userId, String itemId) {
+    public void addItem(String userId, ShopItem item) {
         UserInventory inventory = userInventoryRepository
-                .findByUserIdAndItemId(userId, itemId)
+                .findByUserIdAndItemId(userId, item.getId())
                 .orElseGet(() -> UserInventory.builder()
                         .userId(userId)
-                        .itemId(itemId)
+                        .itemId(item.getId())
+                        .itemName(item.getName())
+                        .category(item.getCategory())
+                        .grade(item.getGrade())
+                        .quantity(0)
                         .build());
         inventory.increaseQuantity();
         userInventoryRepository.save(inventory);
@@ -36,18 +40,8 @@ public class InventoryService {
     public List<InventoryResponse> getInventory(String userId) {
         userService.findUserById(userId);
 
-        List<UserInventory> inventories = userInventoryRepository.findByUserId(userId);
-
-        List<String> itemIds = inventories.stream()
-                .map(UserInventory::getItemId)
-                .toList();
-
-        Map<String, ShopItem> itemMap = shopItemRepository.findByIdIn(itemIds).stream()
-                .collect(Collectors.toMap(ShopItem::getId, item -> item));
-
-        return inventories.stream()
-                .filter(inventory -> itemMap.containsKey(inventory.getItemId()))
-                .map(inventory -> InventoryResponse.of(inventory, itemMap.get(inventory.getItemId())))
+        return userInventoryRepository.findByUserId(userId).stream()
+                .map(InventoryResponse::from)
                 .toList();
     }
 }

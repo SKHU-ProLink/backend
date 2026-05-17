@@ -17,13 +17,13 @@ public class InventoryResponse {
     private ItemGrade grade;
     private int quantity;
 
-    public static InventoryResponse of(UserInventory inventory, ShopItem item) {
+    public static InventoryResponse from(UserInventory inventory) {
         return InventoryResponse.builder()
                 .inventoryId(inventory.getId())
-                .itemId(item.getId())
-                .itemName(item.getName())
-                .category(item.getCategory())
-                .grade(item.getGrade())
+                .itemId(inventory.getItemId())
+                .itemName(inventory.getItemName())
+                .category(inventory.getCategory())
+                .grade(inventory.getGrade())
                 .quantity(inventory.getQuantity())
                 .build();
     }
