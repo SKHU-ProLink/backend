@@ -1,12 +1,12 @@
-package software_capstone.backend.app.store.service;
+package software_capstone.backend.app.inventory.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.store.document.ShopItem;
-import software_capstone.backend.app.store.document.UserInventory;
-import software_capstone.backend.app.store.dto.response.InventoryResponse;
-import software_capstone.backend.app.store.repository.ShopItemRepository;
+import software_capstone.backend.app.inventory.document.UserInventory;
+import software_capstone.backend.app.inventory.dto.InventoryResponse;
+import software_capstone.backend.app.inventory.repository.ShopItemRepository;
 import software_capstone.backend.app.store.repository.UserInventoryRepository;
 import software_capstone.backend.app.user.service.UserService;
 

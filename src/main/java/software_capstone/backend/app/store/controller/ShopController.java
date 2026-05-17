@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
-import software_capstone.backend.app.store.dto.response.InventoryResponse;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
-import software_capstone.backend.app.store.service.InventoryService;
+import software_capstone.backend.app.inventory.service.InventoryService;
 import software_capstone.backend.app.store.service.ShopService;
 
 import java.util.List;
@@ -43,13 +42,5 @@ public class ShopController implements ShopControllerDocs {
             @RequestBody PurchaseRequest request
     ) {
         return ResponseEntity.ok(shopService.purchaseItem(userId, request));
-    }
-
-    @Override
-    @GetMapping("/inventory")
-    public ResponseEntity<List<InventoryResponse>> getInventory(
-            @AuthenticationPrincipal String userId
-    ) {
-        return ResponseEntity.ok(inventoryService.getInventory(userId));
     }
 }

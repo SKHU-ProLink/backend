@@ -1,4 +1,4 @@
-package software_capstone.backend.app.store.document;
+package software_capstone.backend.app.inventory.document;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

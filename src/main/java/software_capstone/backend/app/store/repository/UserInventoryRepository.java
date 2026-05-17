@@ -1,7 +1,7 @@
 package software_capstone.backend.app.store.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import software_capstone.backend.app.store.document.UserInventory;
+import software_capstone.backend.app.inventory.document.UserInventory;
 
 import java.util.List;
 import java.util.Optional;

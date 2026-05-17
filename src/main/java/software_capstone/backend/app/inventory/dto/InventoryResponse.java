@@ -1,9 +1,9 @@
-package software_capstone.backend.app.store.dto.response;
+package software_capstone.backend.app.inventory.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import software_capstone.backend.app.store.document.ShopItem;
-import software_capstone.backend.app.store.document.UserInventory;
+import software_capstone.backend.app.inventory.document.UserInventory;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.document.category.ItemGrade;
 
