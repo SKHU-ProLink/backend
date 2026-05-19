@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.avocado.document.Avocado;
+import software_capstone.backend.app.avocado.dto.AvocadoCreateRequest;
 import software_capstone.backend.app.avocado.dto.AvocadoExpGrantResponse;
 import software_capstone.backend.app.avocado.dto.AvocadoOnboardingRequest;
 import software_capstone.backend.app.avocado.repository.AvocadoRepository;
@@ -38,6 +39,20 @@ public class AvocadoService {
         User user = userService.findUserById(userId);
         user.completeOnboarding(request.difficulty());
         userRepository.save(user); // MongoDB는 JPA와 달리 영속성 컨텍스트가 없기에, 저장을 반영하려면 save 메서드 필요
+    }
+
+    public void createNewAvocado(
+            String userId,
+            AvocadoCreateRequest request
+    ) {
+        userService.validateUserExists(userId);
+
+        avocadoRepository.save(
+                Avocado.builder()
+                        .userId(userId)
+                        .name(request.name())
+                        .build()
+        );
     }
 
     public Avocado findAvocadoByUserId(String userId) {
