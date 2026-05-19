@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.inventory.document.UserInventory;
 import software_capstone.backend.app.inventory.dto.InventoryResponse;
-import software_capstone.backend.app.store.repository.UserInventoryRepository;
+import software_capstone.backend.app.inventory.repository.UserInventoryRepository;
 import software_capstone.backend.app.user.service.UserService;
 
 import java.util.List;
@@ -27,7 +27,6 @@ public class InventoryService {
                         .itemName(item.getName())
                         .category(item.getCategory())
                         .grade(item.getGrade())
-                        .quantity(0)
                         .build());
         inventory.increaseQuantity();
         userInventoryRepository.save(inventory);
@@ -35,7 +34,7 @@ public class InventoryService {
 
     @Transactional(readOnly = true)
     public List<InventoryResponse> getInventory(String userId) {
-        userService.findUserById(userId);
+        userService.validateUserExists(userId);
 
         return userInventoryRepository.findByUserId(userId).stream()
                 .map(InventoryResponse::from)
