@@ -9,11 +9,16 @@ import lombok.Getter;
 public enum Level {
     ONE(100, 1),
     TWO(250, 2),
-    THREE(450, 3);
+    THREE(450, 3),
+    MAX(0, 4);
 
     // 다음 레벨로 가기 위한 경험치량, 임시 값으로 넣어둔 상태
     // TODO: 기획 확립 시 이 값을 변경해야 함
     private final int expToNextLevel;
 
     private final int levelToInt;
+
+    public boolean isMaxLevel() {
+        return this == MAX;
+    }
 }
