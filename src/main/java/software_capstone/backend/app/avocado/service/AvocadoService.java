@@ -11,6 +11,7 @@ import software_capstone.backend.app.avocado.repository.AvocadoRepository;
 import software_capstone.backend.app.user.document.User;
 import software_capstone.backend.app.user.repository.UserRepository;
 import software_capstone.backend.app.user.service.UserService;
+import software_capstone.backend.global.exception.BadRequestException;
 import software_capstone.backend.global.exception.ErrorMessage;
 import software_capstone.backend.global.exception.NotFoundException;
 
@@ -46,6 +47,7 @@ public class AvocadoService {
             AvocadoCreateRequest request
     ) {
         userService.validateUserExists(userId);
+        checkIfActiveAvocadoExists(userId);
 
         avocadoRepository.save(
                 Avocado.builder()
@@ -62,6 +64,12 @@ public class AvocadoService {
 
     public List<Avocado> getCompletedAvocados(String userId) {
         return avocadoRepository.findCompletedAvocados(userId);
+    }
+
+    private void checkIfActiveAvocadoExists(String userId) {
+        if (avocadoRepository.findCurrentAvocado(userId).isPresent()) {
+            throw new BadRequestException(ErrorMessage.ACTIVE_AVOCADO_ALREADY_EXISTS);
+        }
     }
 
     public AvocadoExpGrantResponse grantExp(String userId, int exp) {
