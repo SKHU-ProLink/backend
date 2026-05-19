@@ -21,4 +21,8 @@ public enum Level {
     public boolean isMaxLevel() {
         return this == MAX;
     }
+
+    public Level nextLevel() {
+        return values()[this.ordinal() + 1];
+    }
 }
