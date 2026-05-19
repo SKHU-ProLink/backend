@@ -24,7 +24,9 @@ public class UserInventory extends BaseEntity {
     private String itemName;
     private ItemCategory category;
     private ItemGrade grade;
-    private int quantity;
+
+    @Builder.Default
+    private int quantity = 0;
 
     public void increaseQuantity() {
         this.quantity++;
