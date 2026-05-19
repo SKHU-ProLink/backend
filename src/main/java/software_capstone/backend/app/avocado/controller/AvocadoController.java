@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.w3c.dom.ranges.RangeException;
 import software_capstone.backend.app.avocado.dto.AvocadoCreateRequest;
 import software_capstone.backend.app.avocado.dto.AvocadoOnboardingRequest;
 import software_capstone.backend.app.avocado.service.AvocadoService;
@@ -53,6 +54,25 @@ public class AvocadoController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(
+            summary = "새로운 캐릭터 생성",
+            description =
+                    """
+                    새로운 아보카도를 생성합니다.
+                    
+                    새로운 아보카도에 대한 이름을 body에 담아 요청해야 하고, 반환값은 존재하지 않습니다.
+                    
+                    이미 활성화중인 아보카도가 존재한다면 에러가 발생합니다.
+                    
+                    토큰으로 받아온 유저가 존재하지 않다면 에러가 발생합니다.        
+                    """
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "새로운 캐릭터 생성 성공"),
+            @ApiResponse(responseCode = "400", description = "이미 활성화중인 캐릭터 존재"),
+            @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
+            @ApiResponse(responseCode = "404", description = "유저가 존재하지 않음")
+    })
     @PostMapping
     public ResponseEntity<Void> createNewAvocado(
             @AuthenticationPrincipal TokenProvider.AuthUser authUser,
