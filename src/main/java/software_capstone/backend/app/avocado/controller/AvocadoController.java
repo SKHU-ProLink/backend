@@ -5,12 +5,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import software_capstone.backend.app.avocado.dto.AvocadoCreateRequest;
 import software_capstone.backend.app.avocado.dto.AvocadoOnboardingRequest;
 import software_capstone.backend.app.avocado.service.AvocadoService;
 import software_capstone.backend.app.auth.jwt.TokenProvider;
@@ -49,5 +51,14 @@ public class AvocadoController {
     ) {
         avocadoService.onBoarding(authUser.userId(), request);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createNewAvocado(
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser,
+            @RequestBody @Valid AvocadoCreateRequest request
+    ) {
+        avocadoService.createNewAvocado(authUser.userId(), request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
