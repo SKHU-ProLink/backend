@@ -9,7 +9,7 @@ import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
-import software_capstone.backend.app.inventory.repository.ShopItemRepository;
+import software_capstone.backend.app.store.repository.ShopItemRepository;
 import software_capstone.backend.app.user.document.User;
 import software_capstone.backend.app.user.service.UserService;
 import software_capstone.backend.global.exception.ErrorMessage;
