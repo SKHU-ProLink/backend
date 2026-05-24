@@ -86,6 +86,17 @@ public class FlashcardService {
         log.info("[Flashcard] 학습 완료 처리 - userId: {}, sessionId: {}", userId, sessionId);
     }
 
+    // TTS 생성
+    public byte[] createTts(String text) {
+        if (text == null || text.isBlank()) {
+            throw new BadRequestException(ErrorMessage.EMPTY_TTS_TEXT);
+        }
+
+        log.info("[Flashcard] TTS 생성 요청 - text: {}", text);
+
+        return flashcardClient.createTts(text);
+    }
+
     // 발음 판정
     public PronunciationResponse getPronunciationFeedback(
             String userId, MultipartFile audioFile, String targetWord) {
