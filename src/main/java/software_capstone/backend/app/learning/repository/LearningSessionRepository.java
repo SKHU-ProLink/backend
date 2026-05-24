@@ -5,10 +5,13 @@ import org.springframework.stereotype.Repository;
 import software_capstone.backend.app.learning.document.LearningSession;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface LearningSessionRepository extends MongoRepository<LearningSession, String> {
 
     Optional<LearningSession> findByUserIdAndDate(String userId, LocalDate date);
+
+    List<LearningSession> findAllByUserIdAndDate(String userId, LocalDate date);
 }
