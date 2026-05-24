@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software_capstone.backend.app.flashcard.dto.FlashcardCompleteResponse;
 import software_capstone.backend.app.flashcard.dto.FlashcardResponse;
 import software_capstone.backend.app.flashcard.dto.LangChainFlashcardResponse;
 import software_capstone.backend.app.flashcard.dto.PronunciationResponse;
@@ -68,7 +69,7 @@ public class FlashcardService {
     }
 
     // 플래시카드 학습 완료 상태로 변경
-    public void completeFlashcard(String userId, String sessionId) {
+    public FlashcardCompleteResponse completeFlashcard(String userId, String sessionId) {
         LearningSession session = learningSessionRepository.findById(sessionId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.LEARNING_SESSION_NOT_FOUND));
 
@@ -84,6 +85,14 @@ public class FlashcardService {
         learningSessionRepository.save(session);
 
         log.info("[Flashcard] 학습 완료 처리 - userId: {}, sessionId: {}", userId, sessionId);
+
+        int totalWordsToday = learningSessionRepository
+                .findAllByUserIdAndDate(userId, LocalDate.now())
+                .stream()
+                .mapToInt(s -> s.getFlashcards().size())
+                .sum();
+
+        return new FlashcardCompleteResponse(totalWordsToday);
     }
 
     // TTS 생성
