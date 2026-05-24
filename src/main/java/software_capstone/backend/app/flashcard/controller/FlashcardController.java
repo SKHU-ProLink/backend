@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import software_capstone.backend.app.auth.jwt.TokenProvider;
+import software_capstone.backend.app.flashcard.dto.FlashcardCompleteResponse;
 import software_capstone.backend.app.flashcard.dto.FlashcardResponse;
 import software_capstone.backend.app.flashcard.dto.PronunciationResponse;
 import software_capstone.backend.app.flashcard.service.FlashcardService;
@@ -69,12 +70,11 @@ public class FlashcardController {
             @ApiResponse(responseCode = "404", description = "세션이 존재하지 않음")
     })
     @PostMapping("/complete/{session-id}")
-    public ResponseEntity<Void> completeFlashcard(
+    public ResponseEntity<FlashcardCompleteResponse> completeFlashcard(
             @AuthenticationPrincipal TokenProvider.AuthUser authUser,
             @PathVariable("session-id") String sessionId
     ) {
-        flashcardService.completeFlashcard(authUser.userId(), sessionId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(flashcardService.completeFlashcard(authUser.userId(), sessionId));
     }
 
     @Operation(
