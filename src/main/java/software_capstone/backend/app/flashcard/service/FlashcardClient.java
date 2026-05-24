@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import software_capstone.backend.app.abocado.document.Difficulty;
+import software_capstone.backend.app.user.document.Difficulty;
 import software_capstone.backend.app.flashcard.dto.LangChainFlashcardResponse;
 import software_capstone.backend.app.flashcard.dto.PronunciationResponse;
 import software_capstone.backend.global.exception.BadRequestException;
