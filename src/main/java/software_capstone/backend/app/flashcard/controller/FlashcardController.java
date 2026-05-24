@@ -78,6 +78,28 @@ public class FlashcardController {
     }
 
     @Operation(
+            summary = "TTS 생성",
+            description = """
+                    플래시 카드 단어를 AI 서버에 전송하여 음성 오디오를 생성합니다.
+
+                    쿼리 파라미터로 변환할 텍스트(text)를 전달하면 audio/mpeg 형식의 오디오 데이터를 반환합니다.
+                    """
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "TTS 생성 성공"),
+            @ApiResponse(responseCode = "400", description = "텍스트가 비어있음")
+    })
+    @PostMapping("/tts")
+    public ResponseEntity<byte[]> createTts(
+            @RequestParam String text
+    ) {
+        byte[] audio = flashcardService.createTts(text);
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("audio/mpeg"))
+                .body(audio);
+    }
+
+    @Operation(
             summary = "발음 판정",
             description = """
                     녹음된 오디오 파일을 AI 서버에 전송하여 발음을 판정합니다.
