@@ -42,6 +42,21 @@ public class FlashcardClient {
                 .block();
     }
 
+    public byte[] createTts(String text) {
+        log.info("[FlashcardClient] TTS 생성 요청 - text: {}", text);
+
+        return webClient.post()
+                .uri(langchainBaseUrl + "/flashcard/tts")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(Map.of("text", text))
+                .retrieve()
+                .onStatus(status -> status.isError(), res ->
+                        res.bodyToMono(String.class)
+                                .map(body -> new BadRequestException(ErrorMessage.LANGCHAIN_SERVER_ERROR)))
+                .bodyToMono(byte[].class)
+                .block();
+    }
+
     public PronunciationResponse getPronunciationFeedback(MultipartFile audioFile, String targetWord) {
         log.info("[FlashcardClient] 발음 판정 요청 - targetWord: {}", targetWord);
 
