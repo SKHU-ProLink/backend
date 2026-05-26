@@ -35,16 +35,24 @@ public class LearningSession extends BaseEntity {
     @Builder.Default
     private List<Flashcard> flashcards = new ArrayList<>();
 
-    @Field("quiz_completed")
     @Builder.Default
+    private List<Sentence> sentences = new ArrayList<>();
+
+    @Field("quiz_completed")
     private boolean quizCompleted = false;
 
     @Field("flashcards_completed")
-    @Builder.Default
     private boolean flashcardsCompleted = false;
+
+    @Field("sentences_completed")
+    private boolean sentencesCompleted = false;
 
     public void completeFlashcards() {
         this.flashcardsCompleted = true;
+    }
+
+    public void updateSentences(List<Sentence> sentences) {
+        this.sentences = new ArrayList<>(sentences);
     }
 
     public void complete() {
