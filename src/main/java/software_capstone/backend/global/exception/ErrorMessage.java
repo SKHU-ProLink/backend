@@ -24,6 +24,7 @@ public enum ErrorMessage {
 
     // Avocado
     CURRENT_ACTIVE_AVOCADO_NOT_FOUND("현재 활성화중인 아보카도를 찾을 수 없습니다."),
+    ACTIVE_AVOCADO_ALREADY_EXISTS("이미 활성화중인 아보카도가 존재합니다."),
     ACTIVE_AVOCADO_ALREADY_EXISTS("이미 활성회중인 아보카도가 존재합니다."),
     AVOCADO_NOT_FOUND("아보카도를 찾을 수 없습니다."),
 
