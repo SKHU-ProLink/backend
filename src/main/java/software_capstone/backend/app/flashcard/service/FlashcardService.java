@@ -11,6 +11,7 @@ import software_capstone.backend.app.flashcard.dto.PronunciationResponse;
 import software_capstone.backend.app.learning.document.Flashcard;
 import software_capstone.backend.app.learning.document.LearningSession;
 import software_capstone.backend.app.learning.repository.LearningSessionRepository;
+import software_capstone.backend.app.user.document.Difficulty;
 import software_capstone.backend.app.user.document.User;
 import software_capstone.backend.app.user.service.UserService;
 import software_capstone.backend.global.exception.BadRequestException;
@@ -19,7 +20,6 @@ import software_capstone.backend.global.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -38,25 +38,23 @@ public class FlashcardService {
             throw new BadRequestException(ErrorMessage.USER_NOT_ONBOARDED);
         }
 
-        // 오늘 미완료 세션이 있으면 기존 세션 반환
-        Optional<LearningSession> existingSession = learningSessionRepository
-                .findByUserIdAndDateAndFlashcardsCompletedFalse(userId, LocalDate.now());
+        return learningSessionRepository
+                .findByUserIdAndDateAndFlashcardsCompletedFalse(userId, LocalDate.now())
+                .map(this::toFlashcardResponse)
+                .orElseGet(() -> createFlashcardSession(userId, user.getDifficulty()));
+    }
 
-        if (existingSession.isPresent()) {
-            LearningSession session = existingSession.get();
-            log.info("[Flashcard] 기존 미완료 세션 반환 - userId: {}, sessionId: {}", userId, session.getId());
+    // 기존 미완료 세션 → 응답 변환
+    private FlashcardResponse toFlashcardResponse(LearningSession session) {
+        log.info("[Flashcard] 기존 미완료 세션 반환 - userId: {}, sessionId: {}", session.getUserId(), session.getId());
+        return new FlashcardResponse(session.getId(), toWordItems(session.getFlashcards()));
+    }
 
-            List<FlashcardResponse.WordItem> wordItems = session.getFlashcards().stream()
-                    .map(f -> new FlashcardResponse.WordItem(f.getWord(), f.getPartOfSpeech(), f.getPronunciation(), f.getMeaning()))
-                    .toList();
+    // 새 세션 생성 (LangChain 호출 + 저장)
+    private FlashcardResponse createFlashcardSession(String userId, Difficulty difficulty) {
+        log.info("[Flashcard] 단어 생성 요청 - userId: {}, difficulty: {}", userId, difficulty);
 
-            return new FlashcardResponse(session.getId(), wordItems);
-        }
-
-        // 미완료 세션 없으면 새 세션 생성
-        log.info("[Flashcard] 단어 생성 요청 - userId: {}, difficulty: {}", userId, user.getDifficulty());
-
-        LangChainFlashcardResponse langChainResponse = flashcardClient.generateWords(user.getDifficulty());
+        LangChainFlashcardResponse langChainResponse = flashcardClient.generateWords(difficulty);
 
         List<Flashcard> flashcards = langChainResponse.words().stream()
                 .map(w -> Flashcard.builder()
@@ -71,18 +69,21 @@ public class FlashcardService {
                 LearningSession.builder()
                         .userId(userId)
                         .date(LocalDate.now())
-                        .difficulty(user.getDifficulty())
+                        .difficulty(difficulty)
                         .flashcards(flashcards)
                         .build()
         );
 
         log.info("[Flashcard] 학습 세션 생성 완료 - userId: {}", userId);
 
-        List<FlashcardResponse.WordItem> wordItems = langChainResponse.words().stream()
-                .map(w -> new FlashcardResponse.WordItem(w.word(), w.partOfSpeech(), w.pronunciation(), w.meaning()))
-                .toList();
+        return new FlashcardResponse(saved.getId(), toWordItems(saved.getFlashcards()));
+    }
 
-        return new FlashcardResponse(saved.getId(), wordItems);
+    // Flashcard 리스트 → WordItem 리스트 변환
+    private List<FlashcardResponse.WordItem> toWordItems(List<Flashcard> flashcards) {
+        return flashcards.stream()
+                .map(f -> new FlashcardResponse.WordItem(f.getWord(), f.getPartOfSpeech(), f.getPronunciation(), f.getMeaning()))
+                .toList();
     }
 
     // 플래시카드 학습 완료 상태로 변경
