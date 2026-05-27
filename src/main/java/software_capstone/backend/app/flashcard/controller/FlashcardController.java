@@ -114,10 +114,10 @@ public class FlashcardController {
     })
     @PostMapping(value = "/pronunciation", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PronunciationResponse> getPronunciationFeedback(
-            @AuthenticationPrincipal String userId,
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser,
             @RequestPart MultipartFile audioFile,
             @RequestParam String targetWord
     ) {
-        return ResponseEntity.ok(flashcardService.getPronunciationFeedback(userId, audioFile, targetWord));
+        return ResponseEntity.ok(flashcardService.getPronunciationFeedback(authUser.userId(), audioFile, targetWord));
     }
 }
