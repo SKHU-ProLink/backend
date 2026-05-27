@@ -19,6 +19,7 @@ import software_capstone.backend.global.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -37,6 +38,22 @@ public class FlashcardService {
             throw new BadRequestException(ErrorMessage.USER_NOT_ONBOARDED);
         }
 
+        // 오늘 미완료 세션이 있으면 기존 세션 반환
+        Optional<LearningSession> existingSession = learningSessionRepository
+                .findByUserIdAndDateAndFlashcardsCompletedFalse(userId, LocalDate.now());
+
+        if (existingSession.isPresent()) {
+            LearningSession session = existingSession.get();
+            log.info("[Flashcard] 기존 미완료 세션 반환 - userId: {}, sessionId: {}", userId, session.getId());
+
+            List<FlashcardResponse.WordItem> wordItems = session.getFlashcards().stream()
+                    .map(f -> new FlashcardResponse.WordItem(f.getWord(), f.getPartOfSpeech(), f.getPronunciation(), f.getMeaning()))
+                    .toList();
+
+            return new FlashcardResponse(session.getId(), wordItems);
+        }
+
+        // 미완료 세션 없으면 새 세션 생성
         log.info("[Flashcard] 단어 생성 요청 - userId: {}, difficulty: {}", userId, user.getDifficulty());
 
         LangChainFlashcardResponse langChainResponse = flashcardClient.generateWords(user.getDifficulty());

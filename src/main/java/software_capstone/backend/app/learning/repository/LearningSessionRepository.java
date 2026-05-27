@@ -13,5 +13,7 @@ public interface LearningSessionRepository extends MongoRepository<LearningSessi
 
     Optional<LearningSession> findByUserIdAndDate(String userId, LocalDate date);
 
+    Optional<LearningSession> findByUserIdAndDateAndFlashcardsCompletedFalse(String userId, LocalDate date);
+
     List<LearningSession> findAllByUserIdAndDate(String userId, LocalDate date);
 }
