@@ -13,6 +13,7 @@ import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
+import software_capstone.backend.app.inventory.service.InventoryService;
 import software_capstone.backend.app.store.service.ShopService;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 public class ShopController implements ShopControllerDocs {
 
     private final ShopService shopService;
+    private final InventoryService inventoryService;
 
     @Override
     @GetMapping("/items")

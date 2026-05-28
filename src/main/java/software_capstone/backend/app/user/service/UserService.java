@@ -22,4 +22,10 @@ public class UserService {
     public void save(User user) {
         userRepository.save(user);
     }
+
+    public void validateUserExists(String userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new NotFoundException(ErrorMessage.USER_NOT_FOUND);
+        }
+    }
 }

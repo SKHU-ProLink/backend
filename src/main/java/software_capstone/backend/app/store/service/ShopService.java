@@ -3,6 +3,7 @@ package software_capstone.backend.app.store.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import software_capstone.backend.app.inventory.service.InventoryService;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.document.ShopItem;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
@@ -47,7 +48,7 @@ public class ShopService {
         user.deductCash(item.getPrice());
         userService.save(user);
 
-        inventoryService.addItem(userId, item.getId());
+        inventoryService.addItem(userId, item);
         purchaseHistoryService.save(userId, item);
 
         return PurchaseResponse.of(item, user.getCash());
