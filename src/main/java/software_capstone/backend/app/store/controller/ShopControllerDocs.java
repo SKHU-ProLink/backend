@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
@@ -33,7 +34,7 @@ public interface ShopControllerDocs {
             @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
             @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
     })
-    ResponseEntity<List<ShopItemResponse>> getItems(String userId, ItemCategory category);
+    ResponseEntity<List<ShopItemResponse>> getItems(TokenProvider.AuthUser authUser, ItemCategory category);
 
     @Operation(
             summary = "상점 아이템 구매",
@@ -56,5 +57,5 @@ public interface ShopControllerDocs {
             @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
             @ApiResponse(responseCode = "404", description = "유저 또는 아이템을 찾을 수 없음")
     })
-    ResponseEntity<PurchaseResponse> purchaseItem(String userId, PurchaseRequest request);
+    ResponseEntity<PurchaseResponse> purchaseItem(TokenProvider.AuthUser authUser, PurchaseRequest request);
 }

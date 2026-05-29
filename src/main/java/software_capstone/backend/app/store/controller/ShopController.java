@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.dto.request.PurchaseRequest;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
@@ -24,23 +25,22 @@ import java.util.List;
 public class ShopController implements ShopControllerDocs {
 
     private final ShopService shopService;
-    private final InventoryService inventoryService;
 
     @Override
     @GetMapping("/items")
     public ResponseEntity<List<ShopItemResponse>> getItems(
-            @AuthenticationPrincipal String userId,
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser,
             @RequestParam(required = false) ItemCategory category
     ) {
-        return ResponseEntity.ok(shopService.getItems(userId, category));
+        return ResponseEntity.ok(shopService.getItems(authUser.userId(), category));
     }
 
     @Override
     @PostMapping("/items/purchase")
     public ResponseEntity<PurchaseResponse> purchaseItem(
-            @AuthenticationPrincipal String userId,
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser,
             @RequestBody PurchaseRequest request
     ) {
-        return ResponseEntity.ok(shopService.purchaseItem(userId, request));
+        return ResponseEntity.ok(shopService.purchaseItem(authUser.userId(), request));
     }
 }
