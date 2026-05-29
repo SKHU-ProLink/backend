@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import software_capstone.backend.app.store.document.category.ItemCategory;
 import software_capstone.backend.app.store.document.category.ItemGrade;
 import software_capstone.backend.global.document.BaseEntity;
+import software_capstone.backend.global.exception.BadRequestException;
+import software_capstone.backend.global.exception.ErrorMessage;
 
 @Getter
 @Builder
@@ -30,5 +32,12 @@ public class UserInventory extends BaseEntity {
 
     public void increaseQuantity() {
         this.quantity++;
+    }
+
+    public void decreaseQuantity() {
+        if (this.quantity <= 0) {
+            throw new BadRequestException(ErrorMessage.INSUFFICIENT_ITEM);
+        }
+        this.quantity--;
     }
 }
