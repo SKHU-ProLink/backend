@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.inventory.dto.request.FeedRequest;
 import software_capstone.backend.app.inventory.dto.response.FeedResponse;
 import software_capstone.backend.app.inventory.dto.response.InventoryResponse;
@@ -47,5 +48,5 @@ public interface InventoryControllerDocs {
             @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
             @ApiResponse(responseCode = "404", description = "아이템 또는 아보카도를 찾을 수 없음")
     })
-    ResponseEntity<FeedResponse> feedItem(String userId, FeedRequest request);
+    ResponseEntity<FeedResponse> feedItem(TokenProvider.AuthUser authUser, FeedRequest request);
 }

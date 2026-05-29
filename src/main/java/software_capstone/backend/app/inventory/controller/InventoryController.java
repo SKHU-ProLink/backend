@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.inventory.dto.request.FeedRequest;
 import software_capstone.backend.app.inventory.dto.response.FeedResponse;
 import software_capstone.backend.app.inventory.dto.response.InventoryResponse;
@@ -32,9 +33,9 @@ public class InventoryController implements InventoryControllerDocs {
     @Override
     @PostMapping("/feed")
     public ResponseEntity<FeedResponse> feedItem(
-            @AuthenticationPrincipal String userId,
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser,
             @RequestBody FeedRequest request
     ) {
-        return ResponseEntity.ok(inventoryService.feedItem(userId, request));
+        return ResponseEntity.ok(inventoryService.feedItem(authUser.userId(), request));
     }
 }
