@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
+import software_capstone.backend.app.auth.jwt.TokenProvider;
 import software_capstone.backend.app.inventory.dto.InventoryResponse;
 
 import java.util.List;
@@ -23,5 +24,5 @@ public interface InventoryControllerDocs {
             @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
             @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
     })
-    ResponseEntity<List<InventoryResponse>> getInventory(String userId);
+    ResponseEntity<List<InventoryResponse>> getInventory(TokenProvider.AuthUser authUser);
 }
