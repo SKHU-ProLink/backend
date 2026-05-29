@@ -38,7 +38,8 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/api/regions/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**"
+                                "/v3/api-docs/**",
+                                "/flashcard/tts"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

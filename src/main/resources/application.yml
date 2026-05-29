@@ -16,6 +16,9 @@ swagger:
     - ${APP_SERVER_URL}
     - ${STAGING_SERVER_URL}
 
+langchain:
+  base-url: ${LANGCHAIN_BASE_URL}
+
 jwt:
   secret: ${JWT_SECRET}
   access-token-expiration: 1800000       # 30분
