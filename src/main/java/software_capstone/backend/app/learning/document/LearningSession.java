@@ -55,6 +55,10 @@ public class LearningSession extends BaseEntity {
         this.sentences = new ArrayList<>(sentences);
     }
 
+    public void completeSentences() {
+        this.sentencesCompleted = true;
+    }
+
     public void complete() {
         this.status = Status.COMPLETED;
     }
