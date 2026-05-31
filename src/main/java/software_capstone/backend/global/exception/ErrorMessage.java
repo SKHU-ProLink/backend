@@ -14,6 +14,7 @@ public enum ErrorMessage {
     SESSION_USER_MISMATCH("해당 학습 세션에 대한 권한이 없습니다."),
     ALREADY_COMPLETED_SESSION("이미 완료된 학습 세션입니다."),
     FLASHCARDS_NOT_COMPLETED("플래시카드 학습이 완료되지 않은 세션입니다."),
+    ALREADY_COMPLETED_SENTENCES("이미 예문 학습이 완료된 세션입니다."),
     EMPTY_AUDIO_FILE("오디오 파일이 비어있습니다."),
     EMPTY_TTS_TEXT("TTS 변환할 텍스트가 비어있습니다."),
     LANGCHAIN_SERVER_ERROR("AI 서버와의 통신 중 오류가 발생했습니다."),
