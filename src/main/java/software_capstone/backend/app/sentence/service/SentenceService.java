@@ -8,11 +8,13 @@ import software_capstone.backend.app.learning.document.Sentence;
 import software_capstone.backend.app.learning.repository.LearningSessionRepository;
 import software_capstone.backend.app.sentence.dto.LangChainSentenceRequest;
 import software_capstone.backend.app.sentence.dto.LangChainSentenceResponse;
+import software_capstone.backend.app.sentence.dto.SentenceCompleteResponse;
 import software_capstone.backend.app.sentence.dto.SentenceResponse;
 import software_capstone.backend.global.exception.BadRequestException;
 import software_capstone.backend.global.exception.ErrorMessage;
 import software_capstone.backend.global.exception.NotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Slf4j
@@ -68,5 +70,32 @@ public class SentenceService {
                 .toList();
 
         return new SentenceResponse(sessionId, responseItems);
+    }
+
+    // 예문 학습 완료 상태로 변경
+    public SentenceCompleteResponse completeSentences(String userId, String sessionId) {
+        LearningSession session = learningSessionRepository.findById(sessionId)
+                .orElseThrow(() -> new NotFoundException(ErrorMessage.LEARNING_SESSION_NOT_FOUND));
+
+        if (!session.getUserId().equals(userId)) {
+            throw new BadRequestException(ErrorMessage.SESSION_USER_MISMATCH);
+        }
+
+        if (session.isSentencesCompleted()) {
+            throw new BadRequestException(ErrorMessage.ALREADY_COMPLETED_SENTENCES);
+        }
+
+        session.completeSentences();
+        learningSessionRepository.save(session);
+
+        log.info("[Sentence] 예문 학습 완료 처리 - userId: {}, sessionId: {}", userId, sessionId);
+
+        int totalSentencesToday = learningSessionRepository
+                .findAllByUserIdAndDate(userId, LocalDate.now())
+                .stream()
+                .mapToInt(s -> s.getSentences().size())
+                .sum();
+
+        return new SentenceCompleteResponse(totalSentencesToday);
     }
 }
