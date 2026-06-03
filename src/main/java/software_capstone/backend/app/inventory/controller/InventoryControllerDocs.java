@@ -26,7 +26,7 @@ public interface InventoryControllerDocs {
             @ApiResponse(responseCode = "403", description = "토큰을 담아 요청하지 않음"),
             @ApiResponse(responseCode = "404", description = "유저를 찾을 수 없음")
     })
-    ResponseEntity<List<InventoryResponse>> getInventory(String userId);
+    ResponseEntity<List<InventoryResponse>> getInventory(TokenProvider.AuthUser authUser);
 
     @Operation(
             summary = "아이템 급여",

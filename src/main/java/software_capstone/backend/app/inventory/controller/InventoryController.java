@@ -25,10 +25,11 @@ public class InventoryController implements InventoryControllerDocs {
     @Override
     @GetMapping
     public ResponseEntity<List<InventoryResponse>> getInventory(
-            @AuthenticationPrincipal String userId
+            @AuthenticationPrincipal TokenProvider.AuthUser authUser
     ) {
-        return ResponseEntity.ok(inventoryService.getInventory(userId));
+        return ResponseEntity.ok(inventoryService.getInventory(authUser.userId()));
     }
+
 
     @Override
     @PostMapping("/feed")
