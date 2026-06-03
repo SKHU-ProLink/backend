@@ -62,48 +62,22 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    /*@Operation(summary = "카카오 로그인 콜백", description = "카카오 OAuth 리다이렉트 콜백 엔드포인트입니다.")
+    @Operation(summary = "카카오 로그인 콜백", description = "카카오 OAuth 인가코드를 프론트 딥링크로 전달합니다.")
     @GetMapping("/kakao/callback")
-    public ResponseEntity<TokenResponse> kakaoCallback(
-            @RequestParam String code,
-            @RequestParam(defaultValue = "web") String deviceInfo) {
-        return ResponseEntity.ok(authService.kakaoLogin(new LoginRequest(code, deviceInfo)));
-    }
-
-    @Operation(summary = "네이버 로그인 콜백", description = "네이버 OAuth 리다이렉트 콜백 엔드포인트입니다.")
-    @GetMapping("/naver/callback")
-    public ResponseEntity<TokenResponse> naverCallback(
-            @RequestParam String code,
-            @RequestParam(defaultValue = "web") String deviceInfo) {
-        return ResponseEntity.ok(authService.naverLogin(new LoginRequest(code, deviceInfo)));
-    }*/
-
-    @Operation(summary = "카카오 로그인 콜백", description = "카카오 OAuth 리다이렉트 후 딥링크로 토큰을 전달합니다.")
-    @GetMapping("/kakao/callback")
-    public ResponseEntity<Void> kakaoCallback(
-            @RequestParam String code,
-            @RequestParam(defaultValue = "web") String deviceInfo) {
-        TokenResponse token = authService.kakaoLogin(new LoginRequest(code, deviceInfo));
+    public ResponseEntity<Void> kakaoCallback(@RequestParam String code) {
         URI redirectUri = UriComponentsBuilder
                 .fromUriString("frontend://auth/kakao/callback")
-                .queryParam("accessToken", token.accessToken())
-                .queryParam("refreshToken", token.refreshToken())
-                .queryParam("isNewUser", token.isNewUser())
+                .queryParam("code", code)
                 .build().toUri();
         return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
     }
 
-    @Operation(summary = "네이버 로그인 콜백", description = "네이버 OAuth 리다이렉트 후 딥링크로 토큰을 전달합니다.")
+    @Operation(summary = "네이버 로그인 콜백", description = "네이버 OAuth 인가코드를 프론트 딥링크로 전달합니다.")
     @GetMapping("/naver/callback")
-    public ResponseEntity<Void> naverCallback(
-            @RequestParam String code,
-            @RequestParam(defaultValue = "web") String deviceInfo) {
-        TokenResponse token = authService.naverLogin(new LoginRequest(code, deviceInfo));
+    public ResponseEntity<Void> naverCallback(@RequestParam String code) {
         URI redirectUri = UriComponentsBuilder
                 .fromUriString("frontend://auth/naver/callback")
-                .queryParam("accessToken", token.accessToken())
-                .queryParam("refreshToken", token.refreshToken())
-                .queryParam("isNewUser", token.isNewUser())
+                .queryParam("code", code)
                 .build().toUri();
         return ResponseEntity.status(HttpStatus.FOUND).location(redirectUri).build();
     }
