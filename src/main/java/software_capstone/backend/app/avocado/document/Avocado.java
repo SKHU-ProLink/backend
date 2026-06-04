@@ -29,4 +29,8 @@ public class Avocado extends BaseEntity {
 
     @Builder.Default
     private boolean isActive = true; // 현재 성장시키고 있는 객체인지 판독
+
+    public void gainExp(int amount) {
+        this.exp += amount;
+    }
 }

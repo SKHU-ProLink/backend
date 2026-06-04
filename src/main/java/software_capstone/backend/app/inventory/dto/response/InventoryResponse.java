@@ -1,4 +1,4 @@
-package software_capstone.backend.app.inventory.dto;
+package software_capstone.backend.app.inventory.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
