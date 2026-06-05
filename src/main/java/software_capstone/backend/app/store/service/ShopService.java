@@ -10,8 +10,9 @@ import software_capstone.backend.app.store.dto.request.PurchaseRequest;
 import software_capstone.backend.app.store.dto.response.PurchaseResponse;
 import software_capstone.backend.app.store.dto.response.ShopItemResponse;
 import software_capstone.backend.app.store.repository.ShopItemRepository;
-import software_capstone.backend.app.user.document.User;
 import software_capstone.backend.app.user.service.UserService;
+import software_capstone.backend.app.wallet.document.Wallet;
+import software_capstone.backend.app.wallet.service.WalletService;
 import software_capstone.backend.global.exception.ErrorMessage;
 import software_capstone.backend.global.exception.NotFoundException;
 
@@ -21,8 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShopService {
     private final ShopItemRepository shopItemRepository;
+    private final WalletService walletService;
     private final InventoryService inventoryService;
-    private final PurchaseHistoryService purchaseHistoryService;
     private final UserService userService;
 
     @Transactional(readOnly = true)
@@ -40,17 +41,16 @@ public class ShopService {
 
     @Transactional
     public PurchaseResponse purchaseItem(String userId, PurchaseRequest request) {
-        User user = userService.findUserById(userId);
+        userService.findUserById(userId);
 
         ShopItem item = shopItemRepository.findByIdAndIsReleasedTrue(request.getItemId())
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.ITEM_NOT_FOUND));
 
-        user.deductCash(item.getPrice());
-        userService.save(user);
+        walletService.deductCash(userId, item.getPrice());
 
         inventoryService.addItem(userId, item);
-        purchaseHistoryService.save(userId, item);
 
-        return PurchaseResponse.of(item, user.getCash());
+        Wallet wallet = walletService.findWalletByUserId(userId);
+        return PurchaseResponse.of(item, wallet.getCash());
     }
 }

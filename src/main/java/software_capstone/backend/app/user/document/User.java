@@ -25,7 +25,6 @@ public class User extends BaseEntity {
     private Role role;
     private Difficulty difficulty;
     private LocalDateTime onBoardedAt;
-    private int cash;
 
     public boolean isOnboarded() {
         return onBoardedAt != null;
@@ -37,12 +36,5 @@ public class User extends BaseEntity {
         }
         this.difficulty = difficulty;
         this.onBoardedAt = LocalDateTime.now();
-    }
-
-    public void deductCash(int amount) {
-        if (this.cash < amount) {
-            throw new BadRequestException(ErrorMessage.INSUFFICIENT_CASH);
-        }
-        this.cash -= amount;
     }
 }
