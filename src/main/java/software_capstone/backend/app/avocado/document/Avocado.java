@@ -30,6 +30,19 @@ public class Avocado extends BaseEntity {
     @Builder.Default
     private boolean isActive = true; // 현재 성장시키고 있는 객체인지 판독
 
+    public boolean increaseExpAndCheckLevelUp(int exp) {
+        this.exp += exp;
+        if (this.exp >= this.level.getExpToNextLevel()) {
+            this.exp = this.exp - this.level.getExpToNextLevel(); // 초과된 경험치는 다음 레벨로 경험치 이월
+            this.level = this.level.nextLevel();
+            if (this.level.isMaxLevel()) {
+                this.isActive = false; // MAX 레벨이라면 해당 캐릭터는 비활성화
+            }
+            return true; // 레벨업했을 시에는 true 반환
+        }
+        return false; // 레벨업 없이 경험치만 추가됐을 시에는 false 반환
+    }
+
     public void gainExp(int amount) {
         this.exp += amount;
     }

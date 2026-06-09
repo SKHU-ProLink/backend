@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.avocado.document.Avocado;
+import software_capstone.backend.app.avocado.dto.AvocadoExpGrantResponse;
 import software_capstone.backend.app.avocado.dto.AvocadoOnboardingRequest;
 import software_capstone.backend.app.avocado.repository.AvocadoRepository;
 import software_capstone.backend.app.user.document.User;
@@ -46,5 +47,20 @@ public class AvocadoService {
 
     public List<Avocado> getCompletedAvocados(String userId) {
         return avocadoRepository.findCompletedAvocados(userId);
+    }
+
+    public AvocadoExpGrantResponse grantExp(String userId, int exp) {
+        Avocado avocado = findAvocadoByUserId(userId);
+        boolean isLevelUp = avocado.increaseExpAndCheckLevelUp(exp);
+
+        // 레벨업 이후 현재 경험치량, MAX 레벨에 도달했다면 경험치 값을 -1로 반환
+        int currentExp = avocado.getLevel().isMaxLevel() ? -1 : avocado.getExp();
+        avocadoRepository.save(avocado);
+
+        return AvocadoExpGrantResponse.builder()
+                .isLevelUp(isLevelUp)
+                .currentLevel(avocado.getLevel().getLevelToInt())
+                .currentExp(currentExp)
+                .build();
     }
 }
