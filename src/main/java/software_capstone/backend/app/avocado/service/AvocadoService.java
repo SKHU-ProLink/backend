@@ -72,6 +72,7 @@ public class AvocadoService {
         }
     }
 
+    @Transactional
     public AvocadoExpGrantResponse grantExp(String userId, int exp) {
         Avocado avocado = findAvocadoByUserId(userId);
         boolean isLevelUp = avocado.increaseExpAndCheckLevelUp(exp);

@@ -39,6 +39,8 @@ public interface InventoryControllerDocs {
                     
                     보유 수량이 0이면 에러가 발생합니다.
                     
+                    만일 MAX 레벨에 도달한 경우, 캐릭터의 경험치 값을 -1로 반환합니다.
+                    
                     토큰으로 받아온 유저가 존재하지 않다면 에러가 발생합니다.
                     """
     )

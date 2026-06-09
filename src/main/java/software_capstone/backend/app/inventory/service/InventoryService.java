@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import software_capstone.backend.app.avocado.document.Avocado;
 import software_capstone.backend.app.avocado.repository.AvocadoRepository;
+import software_capstone.backend.app.avocado.service.AvocadoService;
 import software_capstone.backend.app.inventory.dto.request.FeedRequest;
 import software_capstone.backend.app.inventory.dto.response.FeedResponse;
 import software_capstone.backend.app.store.document.ShopItem;
@@ -23,6 +24,7 @@ public class InventoryService {
     private final UserInventoryRepository userInventoryRepository;
     private final AvocadoRepository avocadoRepository;
     private final UserService userService;
+    private final AvocadoService avocadoService;
 
     @Transactional
     public void addItem(String userId, ShopItem item) {
@@ -58,12 +60,8 @@ public class InventoryService {
         inventory.decreaseQuantity();
         userInventoryRepository.save(inventory);
 
-        Avocado avocado = avocadoRepository.findCurrentAvocado(userId)
-                .orElseThrow(() -> new NotFoundException(ErrorMessage.AVOCADO_NOT_FOUND));
+        var expGrantResponse = avocadoService.grantExp(userId, inventory.getGrade().getXpOnFeed());
 
-        boolean isLevelUp = avocado.increaseExpAndCheckLevelUp(inventory.getGrade().getXpOnFeed());
-        avocadoRepository.save(avocado);
-
-        return FeedResponse.of(inventory, avocado, isLevelUp);
+        return FeedResponse.of(inventory, expGrantResponse);
     }
 }
