@@ -11,12 +11,14 @@ public class FeedResponse {
     private int remainingQuantity;
     private int currentExp;
     private String currentLevel;
+    private boolean isLevelUp;
 
-    public static FeedResponse of(UserInventory inventory, Avocado avocado) {
+    public static FeedResponse of(UserInventory inventory, Avocado avocado, boolean isLevelUp) {
         return FeedResponse.builder()
                 .remainingQuantity(inventory.getQuantity())
                 .currentExp(avocado.getExp())
                 .currentLevel(avocado.getLevel().name())
+                .isLevelUp(isLevelUp)
                 .build();
     }
 }

@@ -61,9 +61,9 @@ public class InventoryService {
         Avocado avocado = avocadoRepository.findCurrentAvocado(userId)
                 .orElseThrow(() -> new NotFoundException(ErrorMessage.AVOCADO_NOT_FOUND));
 
-        avocado.gainExp(inventory.getGrade().getXpOnFeed());
+        boolean isLevelUp = avocado.increaseExpAndCheckLevelUp(inventory.getGrade().getXpOnFeed());
         avocadoRepository.save(avocado);
 
-        return FeedResponse.of(inventory, avocado);
+        return FeedResponse.of(inventory, avocado, isLevelUp);
     }
 }
