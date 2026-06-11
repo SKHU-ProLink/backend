@@ -42,8 +42,4 @@ public class Avocado extends BaseEntity {
         }
         return false; // 레벨업 없이 경험치만 추가됐을 시에는 false 반환
     }
-
-    public void gainExp(int amount) {
-        this.exp += amount;
-    }
 }
